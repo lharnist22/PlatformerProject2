@@ -31,7 +31,7 @@ class Platformer extends Phaser.Scene {
             collides: true
         });
 
-        // set up player avatar
+        // set up player
         my.sprite.player = this.physics.add.sprite(0, 0, "platformer_characters", "tile_0000.png").setScale(SCALE)
         my.sprite.player.setCollideWorldBounds(true);
 
