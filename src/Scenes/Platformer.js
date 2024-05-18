@@ -3,6 +3,10 @@ class Platformer extends Phaser.Scene {
         super("platformerScene");
     }
 
+    preload(){
+        this.load.scenePlugin('AnimatedTiles', './lib/AnimatedTiles.js', 'animatedTiles', 'animatedTiles');
+    }
+
     init() {
         // variables and settings
         this.ACCELERATION = 400;
@@ -36,6 +40,9 @@ class Platformer extends Phaser.Scene {
             collides: true
         });
 
+        //Animating tiles
+        this.animatedTiles.init(this.map);
+
         // set up player
         my.sprite.player = this.physics.add.sprite(0, 0, "platformer_characters", "tile_0000.png");
         my.sprite.player.setCollideWorldBounds(true);
@@ -57,6 +64,18 @@ class Platformer extends Phaser.Scene {
             this.physics.world.debugGraphic.clear()
         }, this);
 
+        this.coins = this.map.createFromObjects("Objects", {
+            name: "coin",
+            key: "tilemap_sheet",
+            frame: 151
+        });
+
+        this.physics.world.enable(this.coins, Phaser.Physics.Arcade.STATIC_BODY);
+        this.coinGroup = this.add.group(this.coins);
+        this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
+            obj2.destroy();
+        });
+
     }
 
     update() {
@@ -64,21 +83,21 @@ class Platformer extends Phaser.Scene {
             my.sprite.player.body.setAccelerationX(-this.ACCELERATION);
             my.sprite.player.resetFlip();
             my.sprite.player.anims.play('walk', true);
-            this.bg.x += 0.15;
-            this.bg2.x += 0.15;
-            this.bg3.x += 0.15;
-            this.bg4.x += 0.15;
-            this.bg5.x += 0.15;
+            this.bg.x += 0.35;
+            this.bg2.x += 0.35;
+            this.bg3.x += 0.35;
+            this.bg4.x += 0.35;
+            this.bg5.x += 0.35;
 
         } else if(cursors.right.isDown) {
             my.sprite.player.body.setAccelerationX(this.ACCELERATION);
             my.sprite.player.setFlip(true, false);
             my.sprite.player.anims.play('walk', true);
-            this.bg.x -= 0.15;
-            this.bg2.x -= 0.15;
-            this.bg3.x -= 0.15;
-            this.bg4.x -= 0.15;
-            this.bg5.x -= 0.15;
+            this.bg.x -= 0.35;
+            this.bg2.x -= 0.35;
+            this.bg3.x -= 0.35;
+            this.bg4.x -= 0.35;
+            this.bg5.x -= 0.35;
 
         } else {
             my.sprite.player.body.setAccelerationX(0);
