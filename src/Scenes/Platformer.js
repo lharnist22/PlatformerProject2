@@ -20,6 +20,7 @@ class Platformer extends Phaser.Scene {
         this.bg4 = this.add.image(1600, 0, 'background').setOrigin(0).setScale(1.2);
         this.bg5 = this.add.image(2400, 0, 'background').setOrigin(0).setScale(1.2);
         this.map = this.add.tilemap("Level1", 18, 18, 140, 25);
+        this.physics.world.setBounds(0,0, this.map.widthInPixels, this.map.heightInPixels);
         
 
         // Add a tileset to the map
@@ -42,7 +43,7 @@ class Platformer extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(my.sprite.player, true, 0.1, 0.1);
         this.cameras.main.setScroll(my.sprite.player.x, my.sprite.player.y);
-        this.cameras.main.setZoom(2);
+        this.cameras.main.setZoom(1.8);
 
         // Enable collision handling
         this.physics.add.collider(my.sprite.player, this.groundLayer);
