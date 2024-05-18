@@ -79,6 +79,14 @@ class Platformer extends Phaser.Scene {
     }
 
     update() {
+        if(my.sprite.player.y >= 348){
+            this.scene.restart();
+        }
+        if(my.sprite.player.x >= 2414){
+            this.add.text(2355, 60, 'You win!');
+            console.log("You win!");
+        }
+
         if(cursors.left.isDown) {
             my.sprite.player.body.setAccelerationX(-this.ACCELERATION);
             my.sprite.player.resetFlip();
