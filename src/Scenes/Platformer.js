@@ -11,6 +11,7 @@ class Platformer extends Phaser.Scene {
         this.load.audio("land", "assets/landing.mp3");
         this.load.audio("bg", "assets/Seashells.mp3");
         this.load.audio("walking", "assets/walking.mp3");
+        this.load.audio("yippeee", "assets/yippeee.mp3");
     }
 
     init() {
@@ -25,6 +26,7 @@ class Platformer extends Phaser.Scene {
         // Create a new tilemap game object which uses 18x18 pixel tiles, and is
         // 45 tiles wide and 25 tiles tall.
         this.isWalking = false;
+        this.won = false;
         this.bg = this.add.image(-800, 0, 'background').setOrigin(0).setScale(1.2);
         this.bg2 = this.add.image(0, 0, 'background').setOrigin(0).setScale(1.2);
         this.bg3 = this.add.image(800, 0, 'background').setOrigin(0).setScale(1.2);
@@ -91,17 +93,26 @@ class Platformer extends Phaser.Scene {
             volume: 2,
             loop: true
         });
-        
+        this.yippeee = this.sound.add("yippeee",{
+            volume: 1
+        });
     }
 
     update() {
+        console.log(my.sprite.player.x);
         if(my.sprite.player.y >= 348){
             this.music.stop();
             this.scene.restart();
+            this.isWalking = false;
+            this.walking.stop();
         }
-        if(my.sprite.player.x >= 2414){
+        if(my.sprite.player.x >= 2400){
             this.add.text(2355, 60, 'You win!');
-            console.log("You win!");
+            this.won = true;
+            if(this.won === true){
+                this.yippeee.play();
+            }
+            
         }
         
         if(cursors.left.isDown) {
